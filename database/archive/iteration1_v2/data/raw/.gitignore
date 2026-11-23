@@ -1,0 +1,5 @@
+# Raw snapshots are local, immutable download artifacts and can be very large.
+*
+
+# Retain this rule file so a fresh checkout still creates the expected folder.
+!.gitignore

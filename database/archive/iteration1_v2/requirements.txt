@@ -1,0 +1,8 @@
+# Iterative GeoJSON parsing without loading the FeatureCollection into memory.
+ijson>=3.5,<4
+
+# Small, readable HTTP client for CKAN metadata and file download.
+requests>=2.34,<3
+
+# PostgreSQL/PostGIS client used by migrate, load, and lookup.
+psycopg[binary]>=3.3,<4

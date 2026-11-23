@@ -1,0 +1,43 @@
+{
+  "recorded_at": "2026-09-12T04:43:27.376331+00:00",
+  "state": "complete",
+  "python_version": "3.14.6",
+  "postgres_version": "17.5 (Debian 17.5-1.pgdg110+1)",
+  "postgis_version": "3.5.2",
+  "test_command": "ITERATION2_TEST_DATABASE_URL=<disposable-local-database> PYTHONPATH=src .venv/bin/python -m unittest discover -s tests -v",
+  "tests_run": 81,
+  "unit_tests": 58,
+  "postgis_tests": 23,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "elapsed_seconds": 2.956,
+  "notification_postgis_tests": [
+    "test_cli_migrate_creates_all_seven_tables",
+    "test_defaults_idempotent_claim_and_status_constraints",
+    "test_repeated_migration_and_dataset_loads_preserve_history",
+    "test_capacity_measurement_counts_current_notification_and_preserves_it"
+  ],
+  "verified_behavior": [
+    "Normal migrate creates all seven tables from an empty iteration2_v2 schema.",
+    "Notification columns retain the legacy 8-column delivery-state contract.",
+    "The composite primary key and ON CONFLICT DO NOTHING preserve existing event claims.",
+    "Only pending, sent, and failed statuses are accepted.",
+    "Repeated migration and both domain loaders preserve existing notification rows and delivery metadata.",
+    "Crash capacity measurement observes iteration2_v2.notification_event read-only and excludes speed data."
+  ],
+  "source_sha256": {
+    "postgresql/migrations/003_notification.sql": "b23ae17095eadb0080a55decd2c507f3457439b47cb67168512e4a7aa9be5280",
+    "src/iteration2_v2_pipeline/load.py": "07bf89fd2615332e166b941d985c3f931c78ee74a86a010edf73878c9c67af38",
+    "src/iteration2_v2_pipeline/__main__.py": "a06a8de49209faaa147febd8ad2298c6b8b426f9fcc69eb896d453f9cd3f5578",
+    "src/iteration2_v2_pipeline/crash_storage.py": "02118b1e635758208b328a13072727b2bc255dd8dff104e03500a97ab06f6d49",
+    "tests/test_notification_postgis.py": "7671df93a2b951b8b852321331adf0a5697ced78c7a8647298f932ee7e46126b"
+  },
+  "notifications_sent": 0,
+  "test_database": "Disposable local iteration2_test_notification; production was not used for tests.",
+  "cleanup": {
+    "temporary_test_container_removed": true,
+    "temporary_test_volumes_removed": true,
+    "docker_desktop_restored_to_initial_stopped_state": true
+  }
+}

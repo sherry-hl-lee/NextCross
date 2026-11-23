@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <bool name="prototype_backend_notification_enabled">true</bool>
+    <!-- Live breach notification host (I2). Email delivery + eventId  -->
+    <string name="prototype_backend_notification_url" translatable="false">https://backend-8sxu.onrender.com/api/v1/notification-events</string>
+
+    <!-- Path B: trip report email to parent (multipart). Path A share sheet needs no backend. -->
+    <bool name="prototype_backend_trip_report_email_enabled">true</bool>
+    <string name="prototype_backend_trip_report_email_url" translatable="false">https://backend-8sxu.onrender.com/api/v1/trip-reports/email</string>
+</resources>

@@ -1,0 +1,35 @@
+{
+  "validated_on": "2026-09-16",
+  "scope": "Local calendar pipeline implementation; no Neon deployment",
+  "test_modules": ["test_build", "test_crash", "test_calendar", "test_calendar_download", "test_calendar_cli", "test_calendar_postgis", "test_notification_postgis"],
+  "tests_run": 74,
+  "passed": 74,
+  "skipped": 0,
+  "database_environment": "Disposable local Docker database, postgis/postgis:17-3.5; removed after verification",
+  "database_checks": [
+    "Read-only difference preview without waiting for publication lock",
+    "Atomic replacement of one year and coverage metadata",
+    "Other years and speed/crash/notification data preserved",
+    "Stale competing publication rejected after lock acquisition",
+    "Identical publication is unchanged",
+    "Period tampering and cross-year intervals rejected",
+    "Metadata-write failure rolls back replaced periods",
+    "Migration does not infer coverage for historical rows",
+    "Normal speed reload preserves calendar publication"
+  ],
+  "cli_smoke": {
+    "source": "Synthetic HTML fixtures",
+    "stages": ["calendar-download --import-dir with verified-at", "calendar-build", "migrate", "calendar-load --dry-run", "calendar-load", "repeated calendar-load"],
+    "year": 2026,
+    "published_rows": 27,
+    "repeat_status": "unchanged"
+  },
+  "source_validation_limits": {
+    "school_terms": "Downloaded official HTML parsed successfully with synthetic holiday fixtures",
+    "business_victoria": "Live automated requests returned HTTP 403; full live three-source acquisition was not verified",
+    "holiday_parsing": "Synthetic fixtures based on the official table structure and published dates",
+    "pending_2027": "Synthetic unconfirmed-date fixture produces report only, without a READY bundle"
+  },
+  "production_database_changed": false,
+  "git_commit_or_push_performed": false
+}

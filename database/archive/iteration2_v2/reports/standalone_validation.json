@@ -1,0 +1,8 @@
+{
+  "isolated_folder_copy": true,
+  "cli_help_passed": true,
+  "package_modules_loaded_only_from_isolated_copy": true,
+  "unit_tests_passed": 58,
+  "postgis_tests_not_rerun": 19,
+  "note": "Used installed third-party Python dependencies; no other iteration folder or original application module was imported. PostGIS behavior was unchanged and validated in the preceding full run."
+}

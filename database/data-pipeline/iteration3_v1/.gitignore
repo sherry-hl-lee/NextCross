@@ -1,0 +1,21 @@
+.venv/
+__pycache__/
+*.py[cod]
+.env
+.env.*
+!.env.example
+data/raw/*
+!data/raw/.gitignore
+data/processed/*
+!data/processed/.gitignore
+
+# Local backend query references and their tests are outside this deliverable.
+/src/iteration3_v1_pipeline/lookup.py
+/src/iteration3_v1_pipeline/crash_lookup.py
+/postgresql/queries/
+/tests/test_lookup.py
+/tests/test_postgis.py
+/tests/test_crash_postgis.py
+
+# Local Japanese documentation copies
+*.jp.md

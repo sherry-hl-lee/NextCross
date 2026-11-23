@@ -1,0 +1,8 @@
+{
+  "tripId": "synthetic-report-trip",
+  "startedAt": "2026-10-05T09:00:00+11:00",
+  "endedAt": "2026-10-05T09:10:00+11:00",
+  "origin": "Synthetic origin",
+  "destination": "Synthetic destination",
+  "events": []
+}

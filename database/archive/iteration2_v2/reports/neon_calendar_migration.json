@@ -1,0 +1,273 @@
+{
+  "started_at": "2026-09-16T03:21:19.908261+00:00",
+  "database": "neondb",
+  "new_table": "iteration2_v2.calendar_coverage",
+  "migration": "postgresql/migrations/004_calendar_coverage.sql",
+  "migration_sha256": "8f2ec911fdbb88f4063db4d963a48948893e44b7ccd781cd75798d090bcb202e",
+  "backend_role": "iteration1_v2_backend",
+  "state": "complete",
+  "migration_committed": true,
+  "dataset_reload_performed": false,
+  "calendar_years_published": [],
+  "backend_source_changed": false,
+  "git_commit_or_push_performed": false,
+  "code_commit": "cebc25e4d4cabf728417ec963bac51d87a416566",
+  "before": {
+    "checked_at": "2026-09-16T03:21:20.702100+00:00",
+    "database": "neondb",
+    "owner_role": "neondb_owner",
+    "postgres_version": "18.6 (2078fcb)",
+    "backend_role": "iteration1_v2_backend",
+    "backend_schema_usage": true,
+    "tables": [
+      "calendar_period",
+      "crash_build",
+      "crash_event",
+      "hotspot",
+      "notification_event",
+      "road_speed",
+      "speed_rule"
+    ],
+    "existing_table_rows": {
+      "calendar_period": 27,
+      "crash_build": 1,
+      "crash_event": 19101,
+      "hotspot": 1451,
+      "notification_event": 0,
+      "road_speed": 471571,
+      "speed_rule": 14104
+    },
+    "existing_schema_sha256": "bc7031c34237301f7ab9b3c1b9f9bb81bff044006a5871cfa35be9fd32901f05",
+    "existing_acl_sha256": "2de5b59e75dd88273d157b4e4a6d551a57156f4383a0256eb90b244e02c0acfe",
+    "calendar_period_sha256": "22ae3b6004df2a9e9297d0cc022e3e7419d2ea1d15b01389a5fc6b0866adc54b",
+    "coverage_existed": false,
+    "coverage_columns": [],
+    "coverage_rows": null
+  },
+  "after_transaction": {
+    "checked_at": "2026-09-16T03:21:21.422181+00:00",
+    "database": "neondb",
+    "owner_role": "neondb_owner",
+    "postgres_version": "18.6 (2078fcb)",
+    "backend_role": "iteration1_v2_backend",
+    "backend_schema_usage": true,
+    "tables": [
+      "calendar_coverage",
+      "calendar_period",
+      "crash_build",
+      "crash_event",
+      "hotspot",
+      "notification_event",
+      "road_speed",
+      "speed_rule"
+    ],
+    "existing_table_rows": {
+      "calendar_period": 27,
+      "crash_build": 1,
+      "crash_event": 19101,
+      "hotspot": 1451,
+      "notification_event": 0,
+      "road_speed": 471571,
+      "speed_rule": 14104
+    },
+    "existing_schema_sha256": "bc7031c34237301f7ab9b3c1b9f9bb81bff044006a5871cfa35be9fd32901f05",
+    "existing_acl_sha256": "2de5b59e75dd88273d157b4e4a6d551a57156f4383a0256eb90b244e02c0acfe",
+    "calendar_period_sha256": "22ae3b6004df2a9e9297d0cc022e3e7419d2ea1d15b01389a5fc6b0866adc54b",
+    "coverage_existed": true,
+    "coverage_columns": [
+      [
+        "year",
+        "integer",
+        "NO",
+        null
+      ],
+      [
+        "build_id",
+        "text",
+        "NO",
+        null
+      ],
+      [
+        "policy_version",
+        "text",
+        "NO",
+        null
+      ],
+      [
+        "verified_at",
+        "timestamp with time zone",
+        "NO",
+        null
+      ],
+      [
+        "loaded_at",
+        "timestamp with time zone",
+        "NO",
+        "CURRENT_TIMESTAMP"
+      ],
+      [
+        "source_manifest",
+        "jsonb",
+        "NO",
+        null
+      ]
+    ],
+    "coverage_rows": 0
+  },
+  "new_table_definition": {
+    "columns": [
+      {
+        "name": "year",
+        "data_type": "integer",
+        "nullable": "NO",
+        "default": null
+      },
+      {
+        "name": "build_id",
+        "data_type": "text",
+        "nullable": "NO",
+        "default": null
+      },
+      {
+        "name": "policy_version",
+        "data_type": "text",
+        "nullable": "NO",
+        "default": null
+      },
+      {
+        "name": "verified_at",
+        "data_type": "timestamp with time zone",
+        "nullable": "NO",
+        "default": null
+      },
+      {
+        "name": "loaded_at",
+        "data_type": "timestamp with time zone",
+        "nullable": "NO",
+        "default": "CURRENT_TIMESTAMP"
+      },
+      {
+        "name": "source_manifest",
+        "data_type": "jsonb",
+        "nullable": "NO",
+        "default": null
+      }
+    ],
+    "constraints": [
+      {
+        "name": "calendar_coverage_build_id_check",
+        "type": "c",
+        "definition": "CHECK ((build_id ~ '^[a-f0-9]{64}$'::text))"
+      },
+      {
+        "name": "calendar_coverage_pkey",
+        "type": "p",
+        "definition": "PRIMARY KEY (year)"
+      },
+      {
+        "name": "calendar_coverage_policy_version_check",
+        "type": "c",
+        "definition": "CHECK ((length(policy_version) > 0))"
+      },
+      {
+        "name": "calendar_coverage_source_manifest_check",
+        "type": "c",
+        "definition": "CHECK ((jsonb_typeof(source_manifest) = 'object'::text))"
+      },
+      {
+        "name": "calendar_coverage_year_check",
+        "type": "c",
+        "definition": "CHECK (((year >= 1) AND (year <= 9999)))"
+      }
+    ],
+    "owner": "neondb_owner",
+    "rows": 0,
+    "backend_privileges": {
+      "SELECT": true,
+      "INSERT": false,
+      "UPDATE": false,
+      "DELETE": false,
+      "TRUNCATE": false,
+      "REFERENCES": false,
+      "TRIGGER": false
+    }
+  },
+  "existing_table_counts_unchanged": true,
+  "existing_table_definitions_unchanged": true,
+  "existing_table_oids_and_owners_unchanged": true,
+  "existing_table_acls_unchanged": true,
+  "existing_calendar_periods_unchanged": true,
+  "backend_schema_usage": true,
+  "verification_method": "Owner catalog/count checks and effective backend ACL checks; no SET ROLE, data loading or runtime backend changes.",
+  "after_commit": {
+    "checked_at": "2026-09-16T03:21:22.535908+00:00",
+    "database": "neondb",
+    "owner_role": "neondb_owner",
+    "postgres_version": "18.6 (2078fcb)",
+    "backend_role": "iteration1_v2_backend",
+    "backend_schema_usage": true,
+    "tables": [
+      "calendar_coverage",
+      "calendar_period",
+      "crash_build",
+      "crash_event",
+      "hotspot",
+      "notification_event",
+      "road_speed",
+      "speed_rule"
+    ],
+    "existing_table_rows": {
+      "calendar_period": 27,
+      "crash_build": 1,
+      "crash_event": 19101,
+      "hotspot": 1451,
+      "notification_event": 0,
+      "road_speed": 471571,
+      "speed_rule": 14104
+    },
+    "existing_schema_sha256": "bc7031c34237301f7ab9b3c1b9f9bb81bff044006a5871cfa35be9fd32901f05",
+    "existing_acl_sha256": "2de5b59e75dd88273d157b4e4a6d551a57156f4383a0256eb90b244e02c0acfe",
+    "calendar_period_sha256": "22ae3b6004df2a9e9297d0cc022e3e7419d2ea1d15b01389a5fc6b0866adc54b",
+    "coverage_existed": true,
+    "coverage_columns": [
+      [
+        "year",
+        "integer",
+        "NO",
+        null
+      ],
+      [
+        "build_id",
+        "text",
+        "NO",
+        null
+      ],
+      [
+        "policy_version",
+        "text",
+        "NO",
+        null
+      ],
+      [
+        "verified_at",
+        "timestamp with time zone",
+        "NO",
+        null
+      ],
+      [
+        "loaded_at",
+        "timestamp with time zone",
+        "NO",
+        "CURRENT_TIMESTAMP"
+      ],
+      [
+        "source_manifest",
+        "jsonb",
+        "NO",
+        null
+      ]
+    ],
+    "coverage_rows": 0
+  },
+  "completed_at": "2026-09-16T03:21:22.929106+00:00"
+}

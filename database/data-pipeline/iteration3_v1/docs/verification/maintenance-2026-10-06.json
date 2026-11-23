@@ -1,0 +1,76 @@
+{
+  "verified_on": "2026-10-06",
+  "scope": "Uncommitted working-tree implementation; no production DB access, commit, push, merge or deployment",
+  "pipeline": {
+    "branch": "feat/maintainable-pipeline-operations",
+    "base_commit": "03c490fb7cdb3645c331f63a6a76e762643e4d1b",
+    "checkout": "Export of tracked and intended untracked files, excluding ignored local data and environments",
+    "python": "3.14.6",
+    "postgis": "Disposable local Docker postgis/postgis:17-3.5",
+    "tests": {
+      "run": 151,
+      "passed": 151,
+      "skipped": 0,
+      "elapsed_seconds": 10.571,
+      "modules": [
+        "test_build",
+        "test_crash",
+        "test_calendar",
+        "test_calendar_download",
+        "test_calendar_cli",
+        "test_calendar_postgis",
+        "test_calendar_review",
+        "test_notification_postgis",
+        "test_deployment",
+        "test_operations",
+        "test_backup",
+        "test_workflow_support"
+      ]
+    },
+    "workflow_lint": {
+      "tool": "actionlint",
+      "version": "1.7.12",
+      "passed": true,
+      "shellcheck": false
+    },
+    "github_workflow_execution": "Not yet run with the new implementation",
+    "backup_rehearsal": "backup-rehearsal-2026-10-06.json"
+  },
+  "backend": {
+    "repository": "https://github.com/FIT5120-2026S2-TP10/backend",
+    "branch": "fix/bounded-calendar-coverage",
+    "base_commit": "9c78943",
+    "directory": "Backen_I2_V2",
+    "checkout": "Isolated worktree; original dirty checkout untouched",
+    "tests": {
+      "passed": 207,
+      "live_tests_deselected": 8,
+      "selection": "pytest tests -q -p no:cacheprovider -k 'not live'"
+    },
+    "environment": "Existing Python environment used without mutation; declared python-multipart==0.0.20 supplied in a temporary target directory",
+    "producer_consumer_contract": "Actual pipeline-generated v3 and reviewed v4 manifests accepted within bounds and rejected outside bounds",
+    "hosted_root_directory": "Source/deployment docs identify Backen_I2_V2; actual host settings not inspected"
+  },
+  "frozen_baseline": {
+    "source": "Existing local original CSVs and generated outputs; no download or database operation",
+    "start": "2021-01-01",
+    "end": "2025-12-31",
+    "build_id": "8c2d4e8b2ed185ece2d84908aad37d141d71b5474a4b078f2bc96ea0f5323752",
+    "event_rows": 19101,
+    "hotspot_rows": 1451,
+    "missing_point_rows": 1,
+    "quality": "PASS",
+    "warnings": [
+      "LEGACY_BASELINE_LOCATION_PERIOD_UNCONFIRMED"
+    ],
+    "production_build_match": "Not verified",
+    "candidate": "Temporary offline rehearsal only; producer working-tree changes were not committed"
+  },
+  "remaining_acceptance": [
+    "Review and merge both repositories; deploy and verify backend coverage handling first",
+    "Verify GitHub permissions, environment protection, reader secret and failure notifications",
+    "Review actual calendar corrections and supported 2027 coverage, then publish manually",
+    "Assign operators and transfer account/billing access",
+    "Successor-led backup restoration and application acceptance against an approved environment"
+  ]
+}

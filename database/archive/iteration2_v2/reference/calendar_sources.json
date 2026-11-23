@@ -1,0 +1,45 @@
+{
+  "file": "calendar.csv",
+  "verified_on": "2026-09-12",
+  "coverage_start": "2026-01-01",
+  "coverage_end": "2026-12-31",
+  "date_bounds_inclusive": true,
+  "timezone": "Australia/Melbourne",
+  "region": "Victoria",
+  "purpose": "Calendar-dependent speed rules only; independent of the historical crash aggregation date range.",
+  "record_counts": {
+    "SCHOOL_TERM": 4,
+    "PUBLIC_HOLIDAY": 13,
+    "REGIONAL_HOLIDAY_UNCERTAIN": 10
+  },
+  "sources": {
+    "SCHOOL_TERM": "https://www.vic.gov.au/school-term-dates-and-holidays-victoria",
+    "PUBLIC_HOLIDAY": "https://business.vic.gov.au/business-information/public-holidays/victorian-public-holidays-2026",
+    "REGIONAL_HOLIDAY_UNCERTAIN": "https://business.vic.gov.au/business-information/public-holidays/victorian-non-metropolitan-public-holidays-2026"
+  },
+  "regional_source_last_updated": "2026-08-03",
+  "regional_date_evidence": [
+    {"date": "2026-05-07", "areas": ["Warrnambool", "Moyne"], "scope": "Full municipalities"},
+    {"date": "2026-10-07", "areas": ["Mildura"], "scope": "Part of municipality around Boinka and Murray Sunset National Park"},
+    {"date": "2026-10-08", "areas": ["Yarriambiack"], "scope": "Half-day holiday in Warracknabeal and district"},
+    {"date": "2026-10-13", "areas": ["Hindmarsh"], "scope": "Rainbow, Albacutya and Kenmare localities"},
+    {"date": "2026-10-15", "areas": ["Hindmarsh"], "scope": "Listed localities including Nhill; see source for full extent"},
+    {"date": "2026-10-21", "areas": ["Greater Geelong", "Moira"], "scope": "Geelong municipality and Numurkah district respectively"},
+    {"date": "2026-10-28", "areas": ["Greater Bendigo"], "scope": "Municipal areas west of the Campaspe River"},
+    {"date": "2026-11-03", "areas": ["Victoria with local exceptions"], "scope": "Melbourne Cup; the statewide holiday page allows alternative local dates in non-metropolitan councils"},
+    {"date": "2026-11-04", "areas": ["Macedon Ranges"], "scope": "Postcodes 3444, 3446, 3458 and Cadello/Carlsruhe"},
+    {"date": "2026-11-27", "areas": ["Wodonga"], "scope": "Full-day Wodonga Gold Cup holiday"}
+  ],
+  "policy": [
+    "Term 1 begins on the published term start, 27 January, although government-school students start on 28 January.",
+    "PUBLIC_HOLIDAY contains only the thirteen listed dates that are not subject to the Melbourne Cup local-substitution exception.",
+    "Melbourne Cup on 3 November is not asserted as a uniform statewide holiday; it and every published local-holiday date are marked REGIONAL_HOLIDAY_UNCERTAIN.",
+    "No local-boundary dataset is required. The uncertainty marker applies conservatively throughout Victoria on that date, including locations where the local answer could be established with additional data.",
+    "Only an otherwise relevant school-day or additional-Public-Holiday rule needs regional_holiday_uncertain. Static rules, off-window rules, non-term school dates and already-matching ordinary weekday schedules remain resolvable.",
+    "The half-day local holiday is conservatively uncertain for the whole date because this minimal reference does not encode its local extent or hours.",
+    "Dates are ISO values checked against primary pages. Do not replace them with automatically parsed DataVic API timestamps, which showed day/month conversion discrepancies during the earlier audit.",
+    "Calendar-dependent lookup is supported only for 2026. Absence of rows in another year does not establish that it is a non-holiday year.",
+    "The regional source publishes declarations throughout the year. This is a dated reference snapshot; refresh and revalidate it when declarations or annual dates change.",
+    "The geographic scope of speed lookup is statewide. Regional uncertainty dates are not a restriction to the former three LGAs."
+  ]
+}

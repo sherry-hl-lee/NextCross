@@ -1,0 +1,216 @@
+{
+  "started_at": "2026-09-12T03:02:11.030959+00:00",
+  "host": "ep-orange-king-a7cfvkdp.ap-southeast-2.aws.neon.tech",
+  "database": "neondb",
+  "schema": "iteration2_v2",
+  "state": "complete",
+  "input_files": {
+    "road_speed.csv": {
+      "bytes": 366101606,
+      "sha256": "3ac22e346568f62b538ec7dc336a26b40a4b292b87959686bb1668f54f412ed7"
+    },
+    "speed_rule.csv": {
+      "bytes": 1501014,
+      "sha256": "638b9cc20cc3a4a9075c8197a88f1181dd9210c808f93def84affba865945b88"
+    },
+    "hotspot": {
+      "file": "hotspot.csv",
+      "rows": 1451,
+      "bytes": 234071,
+      "sha256": "751bf7ab45d1a925504d7a95cb27662737d4b61bf226bc04b2e4fdc97f16e0cc"
+    },
+    "crash_event": {
+      "file": "crash_event.csv",
+      "rows": 19101,
+      "bytes": 3529162,
+      "sha256": "da46227fed8075dbc9a8eaf5fd2a8f1fb05e98a7c84b47987216800b45f4cc7d"
+    }
+  },
+  "source_snapshot": "source_snapshot.json",
+  "crash_build_id": "8c2d4e8b2ed185ece2d84908aad37d141d71b5474a4b078f2bc96ea0f5323752",
+  "before": {
+    "road_rows": 462627,
+    "road_speed_sum": 30555145,
+    "notification_rows": 0,
+    "table_objects": [
+      [
+        "notification_event",
+        25671,
+        25671
+      ],
+      [
+        "road_speed",
+        25659,
+        32769
+      ]
+    ]
+  },
+  "database_bytes_before": 223256576,
+  "runtime_role_exists": true,
+  "elapsed_seconds": 420.21,
+  "speed_load": {
+    "road_rows": 471571,
+    "rule_rows": 14104,
+    "calendar_periods": 27
+  },
+  "crash_load": {
+    "build_id": "8c2d4e8b2ed185ece2d84908aad37d141d71b5474a4b078f2bc96ea0f5323752",
+    "event_rows": 19101,
+    "hotspot_rows": 1451,
+    "missing_point_rows": 1
+  },
+  "table_rows": {
+    "road_speed": 471571,
+    "speed_rule": 14104,
+    "calendar_period": 27,
+    "crash_build": 1,
+    "hotspot": 1451,
+    "crash_event": 19101
+  },
+  "crash_totals": {
+    "crashes": 19101,
+    "fatalities": 270,
+    "serious_injuries": 6901,
+    "clustered_events": 6899,
+    "individual_points": 12201,
+    "unlocated_events": 1
+  },
+  "speed_status_rows": {
+    "dynamic": 209,
+    "scheduled": 7280,
+    "static": 462628,
+    "unresolved": 1454
+  },
+  "after": {
+    "road_rows": 462627,
+    "road_speed_sum": 30555145,
+    "notification_rows": 0,
+    "table_objects": [
+      [
+        "notification_event",
+        25671,
+        25671
+      ],
+      [
+        "road_speed",
+        25659,
+        32769
+      ]
+    ]
+  },
+  "existing_iteration1_v2_unchanged": true,
+  "runtime_role": "iteration1_v2_backend",
+  "runtime_role_can_write_v2": false,
+  "runtime_effective_table_privileges": {
+    "road_speed": [
+      true,
+      false
+    ],
+    "speed_rule": [
+      true,
+      false
+    ],
+    "calendar_period": [
+      true,
+      false
+    ],
+    "crash_build": [
+      true,
+      false
+    ],
+    "hotspot": [
+      true,
+      false
+    ],
+    "crash_event": [
+      true,
+      false
+    ]
+  },
+  "runtime_postgis_function_execute": {
+    "geography": true,
+    "geometry": true,
+    "st_distance": true,
+    "st_dwithin": true,
+    "st_makepoint": true,
+    "st_setsrid": true,
+    "st_x": true,
+    "st_y": true
+  },
+  "query_execution_role": "neondb_owner",
+  "runtime_role_verification": "Effective schema, table and PostGIS function privilege checks; queries executed with owner credentials. No role membership changes made.",
+  "speed_lookup_example": {
+    "speedKmh": 40,
+    "status": "scheduled",
+    "sourceSpeedZoneId": "009054e4-c898-4f5f-8ecd-a8c125995f86"
+  },
+  "crash_lookup_examples": [
+    {
+      "timePeriod": "morning",
+      "totals": {
+        "crashCount": 21,
+        "fatalities": 1,
+        "seriousInjuries": 5
+      },
+      "cluster_count": 12,
+      "individual_point_count": 6
+    },
+    {
+      "timePeriod": "daytime",
+      "totals": {
+        "crashCount": 46,
+        "fatalities": 0,
+        "seriousInjuries": 11
+      },
+      "cluster_count": 13,
+      "individual_point_count": 17
+    },
+    {
+      "timePeriod": "night",
+      "totals": {
+        "crashCount": 51,
+        "fatalities": 0,
+        "seriousInjuries": 11
+      },
+      "cluster_count": 17,
+      "individual_point_count": 17
+    },
+    {
+      "timePeriod": "late_night",
+      "totals": {
+        "crashCount": 32,
+        "fatalities": 0,
+        "seriousInjuries": 9
+      },
+      "cluster_count": 16,
+      "individual_point_count": 10
+    }
+  ],
+  "relation_bytes_including_indexes_and_toast": {
+    "road_speed": 237281280,
+    "speed_rule": 2850816,
+    "calendar_period": 32768,
+    "crash_build": 49152,
+    "hotspot": 393216,
+    "crash_event": 6488064
+  },
+  "crash_bytes": 6930432,
+  "speed_bytes_excluded_from_budget": 240164864,
+  "notification_bytes": 16384,
+  "database_bytes_after": 470622208,
+  "postgres_postgis_versions": [
+    "PostgreSQL 18.6 (2078fcb) on aarch64-unknown-linux-gnu, compiled by gcc (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0, 64-bit",
+    "3.6.4"
+  ],
+  "non_speed_budget_bytes": 6946816,
+  "table_rows_after_verification": {
+    "road_speed": 471571,
+    "speed_rule": 14104,
+    "calendar_period": 27,
+    "crash_build": 1,
+    "hotspot": 1451,
+    "crash_event": 19101
+  },
+  "verification_method_note": "Owner credentials cannot SET ROLE to the existing backend role; verified its effective read permissions without changing role membership.",
+  "completed_at": "2026-09-12T03:09:11.241315+00:00"
+}

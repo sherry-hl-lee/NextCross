@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <bool name="historical_crash_context_use_mock">false</bool>
+    <string name="historical_crash_context_url" translatable="false">https://backend-8sxu.onrender.com/api/v1/historical-crash-context</string>
+</resources>

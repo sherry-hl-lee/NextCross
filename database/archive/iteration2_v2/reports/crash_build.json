@@ -1,0 +1,257 @@
+{
+  "period_start": "2021-01-01",
+  "period_end": "2025-12-31",
+  "region": "Victoria",
+  "cohort_policy": "YOUNG_DRIVER_18_25 > 0 AND INJ_OR_FATAL > 0",
+  "source_sha256": "19b8d027b2194c33588f4296b2b0bbbf82757182f0abb68693192ce8dff56f11",
+  "location_source_sha256": "7a824d59d1a9196f187fee8cff31c76ea2f5c3ead2597a07b2d4a552c415e19f",
+  "eps_m": 100,
+  "min_samples": 3,
+  "crs_epsg": 3111,
+  "time_policy_version": "victoria-seasonal-walltime-v1",
+  "cluster_policy_version": "statewide-all-time-dbscan-sorted-ids-v1",
+  "sklearn_version": "1.9.1",
+  "build_id": "8c2d4e8b2ed185ece2d84908aad37d141d71b5474a4b078f2bc96ea0f5323752",
+  "source_file": "data/raw/crashes.csv",
+  "location_source_file": "data/raw/accident-location.csv",
+  "source_columns": [
+    "ACCIDENT_NO",
+    "ACCIDENT_DATE",
+    "ACCIDENT_TIME",
+    "ACCIDENT_TYPE",
+    "DAY_OF_WEEK",
+    "DCA_CODE",
+    "DCA_CODE_DESCRIPTION",
+    "LIGHT_CONDITION",
+    "POLICE_ATTEND",
+    "ROAD_GEOMETRY",
+    "SEVERITY",
+    "SPEED_ZONE",
+    "RUN_OFFROAD",
+    "ROAD_NAME",
+    "ROAD_TYPE",
+    "ROAD_ROUTE_1",
+    "LGA_NAME",
+    "DTP_REGION",
+    "LATITUDE",
+    "LONGITUDE",
+    "VICGRID_X",
+    "VICGRID_Y",
+    "TOTAL_PERSONS",
+    "INJ_OR_FATAL",
+    "FATALITY",
+    "SERIOUSINJURY",
+    "OTHERINJURY",
+    "NONINJURED",
+    "MALES",
+    "FEMALES",
+    "BICYCLIST",
+    "PASSENGER",
+    "DRIVER",
+    "PEDESTRIAN",
+    "PILLION",
+    "MOTORCYCLIST",
+    "UNKNOWN",
+    "PED_CYCLIST_5_12",
+    "PED_CYCLIST_13_18",
+    "OLD_PED_65_AND_OVER",
+    "OLD_DRIVER_75_AND_OVER",
+    "YOUNG_DRIVER_18_25",
+    "NO_OF_VEHICLES",
+    "HEAVYVEHICLE",
+    "PASSENGERVEHICLE",
+    "MOTORCYCLE",
+    "PT_VEHICLE",
+    "DEG_URBAN_NAME",
+    "SRNS",
+    "RMA",
+    "DIVIDED",
+    "STAT_DIV_NAME"
+  ],
+  "source_date_min": "2012-01-01",
+  "source_date_max": "2025-12-31",
+  "source_rows_by_year": {
+    "2012": 13912,
+    "2013": 14023,
+    "2014": 14503,
+    "2015": 15684,
+    "2016": 15779,
+    "2017": 13351,
+    "2018": 12765,
+    "2019": 14399,
+    "2020": 12170,
+    "2021": 14013,
+    "2022": 15043,
+    "2023": 15558,
+    "2024": 15386,
+    "2025": 13766
+  },
+  "counts": {
+    "source_rows": 200352,
+    "source_invalid_date_rows": 0,
+    "source_missing_id_rows": 0,
+    "period_rows": 73766,
+    "young_involved_before_casualty_filter": 19103,
+    "zero_casualty_excluded": 2,
+    "invalid_cohort_count_rows": 0,
+    "source_duplicate_ids": 0
+  },
+  "excluded": {
+    "missing_id_rows": 0,
+    "duplicate_id_rows": 0,
+    "invalid_count_rows": 0,
+    "invalid_time_rows": 0
+  },
+  "excluded_id_examples": {
+    "zero_casualty_excluded": [
+      "T20230010484",
+      "T20210025034"
+    ]
+  },
+  "selected_totals": {
+    "crash_count": 19101,
+    "fatalities": 270,
+    "serious_injuries": 6901
+  },
+  "mappable_totals": {
+    "crash_count": 19100,
+    "fatalities": 270,
+    "serious_injuries": 6901
+  },
+  "clustered_totals": {
+    "crash_count": 6899,
+    "fatalities": 38,
+    "serious_injuries": 2205
+  },
+  "noise_totals": {
+    "crash_count": 12201,
+    "fatalities": 232,
+    "serious_injuries": 4696
+  },
+  "missing_coordinate_totals": {
+    "crash_count": 1,
+    "fatalities": 0,
+    "serious_injuries": 0
+  },
+  "missing_coordinate_id_examples": [
+    "T20210011215"
+  ],
+  "by_period": {
+    "morning": {
+      "crash_count": 4422,
+      "fatalities": 58,
+      "serious_injuries": 1523
+    },
+    "daytime": {
+      "crash_count": 8087,
+      "fatalities": 86,
+      "serious_injuries": 2704
+    },
+    "night": {
+      "crash_count": 4715,
+      "fatalities": 78,
+      "serious_injuries": 1759
+    },
+    "late_night": {
+      "crash_count": 1877,
+      "fatalities": 48,
+      "serious_injuries": 915
+    }
+  },
+  "by_year": {
+    "2021": {
+      "crash_count": 3842,
+      "fatalities": 44,
+      "serious_injuries": 1528
+    },
+    "2022": {
+      "crash_count": 3956,
+      "fatalities": 52,
+      "serious_injuries": 1269
+    },
+    "2023": {
+      "crash_count": 3947,
+      "fatalities": 53,
+      "serious_injuries": 1426
+    },
+    "2024": {
+      "crash_count": 3875,
+      "fatalities": 70,
+      "serious_injuries": 1300
+    },
+    "2025": {
+      "crash_count": 3481,
+      "fatalities": 51,
+      "serious_injuries": 1378
+    }
+  },
+  "location_join": {
+    "matched": 19101,
+    "missing": 0,
+    "multiple_rows": 0,
+    "conflicting_labels": 0
+  },
+  "hotspot_count": 1451,
+  "maximum_representative_radius_m": 477.717,
+  "policy": {
+    "scope": "Victoria statewide, inclusive date range; no LGA or bounding-box filter.",
+    "metrics": "Crash count and fatalities/serious injuries of all participants in qualifying crashes.",
+    "clustering": "One point per accident, sorted IDs; one statewide all-time DBSCAN. Noise and missing locations retained. eps is neighbor distance, not maximum cluster radius.",
+    "representative": "Actual member point nearest coordinate-wise projected median; ties use accident ID. Not a surveyed intersection coordinate.",
+    "time_basis": "Source local wall time, no timezone/DST conversion; start inclusive/end exclusive.",
+    "time_boundaries": {
+      "summer": {
+        "months": [
+          12,
+          1,
+          2
+        ],
+        "morning_start": 6,
+        "night_start": 20
+      },
+      "autumn": {
+        "months": [
+          3,
+          4,
+          5
+        ],
+        "morning_start": 7,
+        "night_start": 18
+      },
+      "winter": {
+        "months": [
+          6,
+          7,
+          8
+        ],
+        "morning_start": 7,
+        "night_start": 17
+      },
+      "spring": {
+        "months": [
+          9,
+          10,
+          11
+        ],
+        "morning_start": 6,
+        "night_start": 19
+      }
+    },
+    "invalid_rows": "All duplicate ID occurrences and invalid IDs/counts/dates/times excluded and reported; invalid coordinates retained as NULL.",
+    "location_labels": "Official location labels joined by ACCIDENT_NO; conflicting/missing joins use original crash road label, without inventing a location."
+  },
+  "files": {
+    "hotspot": {
+      "file": "hotspot.csv",
+      "rows": 1451,
+      "bytes": 234071,
+      "sha256": "751bf7ab45d1a925504d7a95cb27662737d4b61bf226bc04b2e4fdc97f16e0cc"
+    },
+    "crash_event": {
+      "file": "crash_event.csv",
+      "rows": 19101,
+      "bytes": 3529162,
+      "sha256": "da46227fed8075dbc9a8eaf5fd2a8f1fb05e98a7c84b47987216800b45f4cc7d"
+    }
+  }
+}

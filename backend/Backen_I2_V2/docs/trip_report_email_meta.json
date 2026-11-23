@@ -1,0 +1,16 @@
+{
+  "tripId": "synthetic-report-trip",
+  "plannedTripId": null,
+  "parentEmail": "parent@example.com",
+  "subject": "NextCross synthetic trip report",
+  "plainText": "NextCross trip report\nFrom: Home\nTo: School\nHard acceleration: 1\nHard braking: 0\nSynthetic test data only.\nFor post-trip discussion only; this does not establish unsafe driving or the cause of an event.",
+  "includeDetailedRoute": false,
+  "includeReflectionConversation": false,
+  "startedAtEpochMillis": 1728000000000,
+  "endedAtEpochMillis": 1728003600000,
+  "startingPointLabel": "Home",
+  "destinationLabel": "School",
+  "hardAccelerationCount": 1,
+  "hardBrakingCount": 0,
+  "clientRequestId": "00000000-0000-4000-8000-000000000001"
+}

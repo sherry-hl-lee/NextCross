@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Live I2 speed-limit lookup on the same backend as historical crash. -->
+    <bool name="speed_limit_use_mock">false</bool>
+    <string name="speed_limit_url" translatable="false">https://backend-8sxu.onrender.com/api/v1/speed-limit</string>
+    <string name="speed_analysis_trips_url" translatable="false">https://backend-8sxu.onrender.com/api/v1/trips</string>
+</resources>

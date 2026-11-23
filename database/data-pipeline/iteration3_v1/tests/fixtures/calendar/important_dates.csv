@@ -1,0 +1,24 @@
+arun,dateType,name,important_date,publisher,description,source
+,SCHOOL_TERM,Term 1 2026 - Start date - students start 28 January in government schools,27/01/2026,Department of Education,,https://www.vic.gov.au/school-term-dates-and-holidays-victoria
+,SCHOOL_TERM,Term 1 2026 - End date,2/04/2026,Department of Education,,https://www.vic.gov.au/school-term-dates-and-holidays-victoria
+,SCHOOL_TERM,Term 2 2026 - Start date,20/04/2026,Department of Education,,https://www.vic.gov.au/school-term-dates-and-holidays-victoria
+,SCHOOL_TERM,Term 2 2026 - End date,26/06/2026,Department of Education,,https://www.vic.gov.au/school-term-dates-and-holidays-victoria
+,SCHOOL_TERM,Term 3 2026 - Start date,13/07/2026,Department of Education,,https://www.vic.gov.au/school-term-dates-and-holidays-victoria
+,SCHOOL_TERM,Term 3 2026 - End date,18/09/2026,Department of Education,,https://www.vic.gov.au/school-term-dates-and-holidays-victoria
+,SCHOOL_TERM,Term 4 2026 - Start date,5/10/2026,Department of Education,,https://www.vic.gov.au/school-term-dates-and-holidays-victoria
+,SCHOOL_TERM,Term 4 2026 - End date,18/12/2026,Department of Education,,https://www.vic.gov.au/school-term-dates-and-holidays-victoria
+,PUBLIC_HOLIDAY,New Year's Day,1/01/2026,Business Victoria,,https://business.vic.gov.au/business-information/public-holidays/victorian-public-holidays-2026
+,PUBLIC_HOLIDAY,Australia Day,26/01/2026,Business Victoria,,https://business.vic.gov.au/business-information/public-holidays/victorian-public-holidays-2026
+,PUBLIC_HOLIDAY,Labour Day,9/03/2026,Business Victoria,,https://business.vic.gov.au/business-information/public-holidays/victorian-public-holidays-2026
+,PUBLIC_HOLIDAY,Good Friday,3/04/2026,Business Victoria,,https://business.vic.gov.au/business-information/public-holidays/victorian-public-holidays-2026
+,PUBLIC_HOLIDAY,Saturday before Easter Sunday,4/04/2026,Business Victoria,,https://business.vic.gov.au/business-information/public-holidays/victorian-public-holidays-2026
+,PUBLIC_HOLIDAY,Easter Sunday,5/04/2026,Business Victoria,,https://business.vic.gov.au/business-information/public-holidays/victorian-public-holidays-2026
+,PUBLIC_HOLIDAY,Easter Monday,6/04/2026,Business Victoria,,https://business.vic.gov.au/business-information/public-holidays/victorian-public-holidays-2026
+,PUBLIC_HOLIDAY,ANZAC Day,25/04/2026,Business Victoria,No replacement holiday when this date falls on a weekend.,https://business.vic.gov.au/business-information/public-holidays/victorian-public-holidays-2026
+,PUBLIC_HOLIDAY,King's Birthday,8/06/2026,Business Victoria,,https://business.vic.gov.au/business-information/public-holidays/victorian-public-holidays-2026
+,PUBLIC_HOLIDAY,Friday before the AFL grand final,25/09/2026,Business Victoria,,https://business.vic.gov.au/business-information/public-holidays/victorian-public-holidays-2026
+,PUBLIC_HOLIDAY,Melbourne Cup,3/11/2026,Business Victoria,Local councils may arrange alternative holidays.,https://business.vic.gov.au/business-information/public-holidays/victorian-public-holidays-2026
+,PUBLIC_HOLIDAY,Christmas Day,25/12/2026,Business Victoria,,https://business.vic.gov.au/business-information/public-holidays/victorian-public-holidays-2026
+,PUBLIC_HOLIDAY,Boxing Day,26/12/2026,Business Victoria,,https://business.vic.gov.au/business-information/public-holidays/victorian-public-holidays-2026
+,PUBLIC_HOLIDAY,Boxing Day,28/12/2026,Business Victoria,An additional weekday holiday applies.,https://business.vic.gov.au/business-information/public-holidays/victorian-public-holidays-2026
+,MULTI_FAITH,Synthetic unrelated event,1/01/2026,Fixture,,https://example.invalid/fixture

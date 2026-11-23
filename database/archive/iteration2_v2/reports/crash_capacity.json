@@ -1,0 +1,50 @@
+{
+  "measured_at": "2026-09-12T00:58:23.234015+00:00",
+  "database": "iteration2_test_v2_validation",
+  "load": {
+    "build_id": "8c2d4e8b2ed185ece2d84908aad37d141d71b5474a4b078f2bc96ea0f5323752",
+    "event_rows": 19101,
+    "hotspot_rows": 1451,
+    "missing_point_rows": 1
+  },
+  "crash_relations": {
+    "crash_event": {
+      "table_including_toast_bytes": 4366336,
+      "indexes_bytes": 2310144,
+      "total_relation_bytes": 6676480
+    },
+    "hotspot": {
+      "table_including_toast_bytes": 311296,
+      "indexes_bytes": 81920,
+      "total_relation_bytes": 393216
+    },
+    "crash_build": {
+      "table_including_toast_bytes": 49152,
+      "indexes_bytes": 32768,
+      "total_relation_bytes": 81920
+    }
+  },
+  "crash_total_bytes": 7151616,
+  "notification": {
+    "relation": "iteration1_v2.notification_event",
+    "rows": 1,
+    "size": {
+      "table_including_toast_bytes": 16384,
+      "indexes_bytes": 16384,
+      "total_relation_bytes": 32768
+    },
+    "scope": "Observed disposable test database only; not production volume."
+  },
+  "budget": {
+    "limit_bytes": 200000000,
+    "speed_data_excluded": true,
+    "measured_crash_plus_notification_bytes": 7184384,
+    "remaining_bytes": 192815616,
+    "within_limit": true,
+    "scope": "Crash tables and observed notification table including TOAST/indexes. Excludes speed, shared catalogs, and unmeasured production notification growth."
+  },
+  "database_bytes": 267406483,
+  "current_v2_speed_relation_bytes": 240410624,
+  "database_minus_current_v2_speed_bytes": 26995859,
+  "database_overhead_note": "Diagnostic only: includes system catalogs, free pages and any other schemas; not a production budget measurement."
+}

@@ -1,0 +1,19 @@
+{
+  "tripId": "synthetic-two-turn-trip",
+  "selectedEvent": {
+    "eventId": "synthetic-braking-event",
+    "type": "RAPID_DECELERATION",
+    "startOffsetSeconds": 180,
+    "endOffsetSeconds": 183,
+    "durationSeconds": 3,
+    "dataQuality": "UNKNOWN",
+    "detectorVersion": "synthetic-test-v1",
+    "metrics": {
+      "speedBeforeKmh": 62,
+      "speedAfterKmh": 34,
+      "peakAccelerationMs2": -4.8
+    }
+  },
+  "questionAsked": "What was happening around you?",
+  "driverContext": "Traffic stopped ahead of me."
+}

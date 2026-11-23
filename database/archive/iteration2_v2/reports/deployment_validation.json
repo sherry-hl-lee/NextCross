@@ -1,0 +1,70 @@
+{
+  "validated_at": "2026-09-17T12:56:18.871134+00:00",
+  "scope": "Working-tree files intended for Git, copied into a clean temporary directory; no ignored lookup code, query SQL or local reference tests.",
+  "test_modules": [
+    "test_build",
+    "test_crash",
+    "test_calendar",
+    "test_calendar_download",
+    "test_calendar_cli",
+    "test_calendar_postgis",
+    "test_notification_postgis",
+    "test_deployment"
+  ],
+  "tests_run": 87,
+  "passed": 87,
+  "skipped": 0,
+  "test_elapsed_seconds": 7.725,
+  "database_tests_passed": 12,
+  "database_environment": "Dedicated disposable local postgis/postgis:17-3.5 container",
+  "deployment_smoke": {
+    "source": "Synthetic speed/crash fixtures and the small DataVic CSV test fixture; no live source download.",
+    "prepared_counts": {
+      "speed": {
+        "road_rows": 1,
+        "rule_rows": 0
+      },
+      "crashes": {
+        "event_rows": 3,
+        "hotspot_rows": 1
+      },
+      "calendar": {
+        "rows": 18,
+        "record_counts": {
+          "PUBLIC_HOLIDAY": 13,
+          "REGIONAL_HOLIDAY_UNCERTAIN": 1,
+          "SCHOOL_TERM": 4
+        }
+      }
+    },
+    "first_status": "complete",
+    "repeated_status": "complete",
+    "repeated_calendar_status": "unchanged",
+    "database_counts_after_repeat": {
+      "calendar_coverage": 1,
+      "calendar_period": 19,
+      "crash_build": 1,
+      "crash_event": 3,
+      "hotspot": 1,
+      "notification_event": 1,
+      "road_speed": 1,
+      "speed_rule": 0
+    },
+    "notification_preserved": true,
+    "other_calendar_year_preserved": true
+  },
+  "code_sha256": {
+    "deploy/github_actions.py": "13f5f2826cec47327ae9e0890e0c7ea8c8644b9af8402e4f89bb51ade3f3afd1",
+    "tests/test_deployment.py": "df9d56d71c3e9e6bc1122a2a73b56d5467a4913e3de0b056a3f61393480f478d",
+    ".github/workflows/iteration2-v2-neon.yml": "d24cb362806eace8b5bb6dcb1000a29982b773d0d408a8c004ab37ac56048b56"
+  },
+  "production_database_changed": false,
+  "github_hosted_workflow_executed": false,
+  "git_commit_or_push_performed": false,
+  "workflow_validation": {
+    "tool": "actionlint",
+    "version": "1.7.12",
+    "exit_code": 0,
+    "github_hosted_run_performed": false
+  }
+}

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--
+        Post-trip AI reflection. The app holds no provider key: it POSTs whitelisted event
+        numbers to the backend, which owns the credential and the prompts.
+
+        Keep this true until the backend serves POST {ai_reflection_url}/question and
+        POST {ai_reflection_url}/advice. See docs/BACKEND_AI_REFLECTION_TWO_TURN.md.
+    -->
+    <bool name="ai_reflection_use_mock">false</bool>
+    <string name="ai_reflection_url" translatable="false">https://backend-8sxu.onrender.com/api/v1/ai/reflection</string>
+</resources>

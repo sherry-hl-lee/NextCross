@@ -1,0 +1,27 @@
+{
+  "status": "passed",
+  "started_at": "2026-10-06T11:43:34.253667+00:00",
+  "finished_at": "2026-10-06T11:43:40.772784+00:00",
+  "elapsed_seconds": 6.519,
+  "source_database": "iteration2_test_backup_helper",
+  "target_database": "iteration2_test_backup_restored",
+  "tables": {
+    "calendar_coverage": 1,
+    "calendar_period": 1,
+    "crash_build": 1,
+    "crash_event": 1,
+    "hotspot": 1,
+    "notification_event": 3,
+    "report_email_dispatch": 4,
+    "road_speed": 1,
+    "speed_rule": 1
+  },
+  "schema_columns_equal": true,
+  "schema_constraints_equal": true,
+  "schema_triggers_equal": true,
+  "all_rows_equal": true,
+  "backup_bytes": 26339,
+  "backup_sha256": "5dcbc49f1a4468ce57d1804d793932153de66cdf52d9fa53b19a0958052fee06",
+  "tested_working_tree": true,
+  "scope": "Synthetic data in two separate local Docker test databases; no production access"
+}

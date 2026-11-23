@@ -1,0 +1,23 @@
+arun,dateType,name,important_date,publisher,description,source
+,SCHOOL_TERM,Term 1 2027 - Start date - students start 28 January in government schools,27/01/2027,Department of Education,,https://www.vic.gov.au/school-term-dates-and-holidays-victoria
+,SCHOOL_TERM,Term 1 2027 - End date,25/03/2027,Department of Education,,https://www.vic.gov.au/school-term-dates-and-holidays-victoria
+,SCHOOL_TERM,Term 2 2027 - Start date,12/04/2027,Department of Education,,https://www.vic.gov.au/school-term-dates-and-holidays-victoria
+,SCHOOL_TERM,Term 2 2027 - End date,25/06/2027,Department of Education,,https://www.vic.gov.au/school-term-dates-and-holidays-victoria
+,SCHOOL_TERM,Term 3 2027 - Start date,12/07/2027,Department of Education,,https://www.vic.gov.au/school-term-dates-and-holidays-victoria
+,SCHOOL_TERM,Term 3 2027 - End date,17/09/2027,Department of Education,,https://www.vic.gov.au/school-term-dates-and-holidays-victoria
+,SCHOOL_TERM,Term 4 2027 - Start date,4/10/2027,Department of Education,,https://www.vic.gov.au/school-term-dates-and-holidays-victoria
+,SCHOOL_TERM,Term 4 2027 - End date,17/12/2027,Department of Education,,https://www.vic.gov.au/school-term-dates-and-holidays-victoria
+,PUBLIC_HOLIDAY,New Year's Day,1/01/2027,Business Victoria,,https://business.vic.gov.au/business-information/public-holidays/victorian-public-holidays-2027
+,PUBLIC_HOLIDAY,Australia Day,26/01/2027,Business Victoria,,https://business.vic.gov.au/business-information/public-holidays/victorian-public-holidays-2027
+,PUBLIC_HOLIDAY,Labour Day,8/03/2027,Business Victoria,,https://business.vic.gov.au/business-information/public-holidays/victorian-public-holidays-2027
+,PUBLIC_HOLIDAY,Good Friday,26/03/2027,Business Victoria,,https://business.vic.gov.au/business-information/public-holidays/victorian-public-holidays-2027
+,PUBLIC_HOLIDAY,Saturday before Easter Sunday,27/03/2027,Business Victoria,,https://business.vic.gov.au/business-information/public-holidays/victorian-public-holidays-2027
+,PUBLIC_HOLIDAY,Easter Sunday,28/03/2027,Business Victoria,,https://business.vic.gov.au/business-information/public-holidays/victorian-public-holidays-2027
+,PUBLIC_HOLIDAY,Easter Monday,29/03/2027,Business Victoria,,https://business.vic.gov.au/business-information/public-holidays/victorian-public-holidays-2027
+,PUBLIC_HOLIDAY,ANZAC Day,25/04/2027,Business Victoria,No replacement holiday when this date falls on a weekend.,https://business.vic.gov.au/business-information/public-holidays/victorian-public-holidays-2027
+,PUBLIC_HOLIDAY,King's Birthday,14/06/2027,Business Victoria,,https://business.vic.gov.au/business-information/public-holidays/victorian-public-holidays-2027
+,PUBLIC_HOLIDAY,Melbourne Cup,2/11/2027,Business Victoria,Local councils may arrange alternative holidays.,https://business.vic.gov.au/business-information/public-holidays/victorian-public-holidays-2027
+,PUBLIC_HOLIDAY,Christmas Day,25/12/2027,Business Victoria,,https://business.vic.gov.au/business-information/public-holidays/victorian-public-holidays-2027
+,PUBLIC_HOLIDAY,Boxing Day,26/12/2027,Business Victoria,,https://business.vic.gov.au/business-information/public-holidays/victorian-public-holidays-2027
+,PUBLIC_HOLIDAY,Boxing Day,28/12/2027,Business Victoria,An additional weekday holiday applies.,https://business.vic.gov.au/business-information/public-holidays/victorian-public-holidays-2027
+,MULTI_FAITH,Synthetic unrelated event,1/01/2027,Fixture,,https://example.invalid/fixture

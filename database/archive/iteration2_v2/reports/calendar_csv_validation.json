@@ -1,0 +1,72 @@
+{
+  "validated_at": "2026-09-17T12:40:22.842270+00:00",
+  "scope": "DataVic CSV-only pipeline; manually maintained regional supplement removed. Working tree, not committed or deployed to Neon.",
+  "test_modules": [
+    "test_build",
+    "test_crash",
+    "test_calendar",
+    "test_calendar_download",
+    "test_calendar_cli",
+    "test_calendar_postgis",
+    "test_notification_postgis"
+  ],
+  "tests_run": 80,
+  "passed": 80,
+  "skipped": 0,
+  "test_elapsed_seconds": 6.474,
+  "database_environment": "Dedicated disposable local postgis/postgis:17-3.5 container",
+  "database_tests_passed": 12,
+  "live_2026": {
+    "source_snapshot_id": "20260917T123819047061Z-b64a3de3",
+    "build_id": "a5bfa94d7f4d83369553ba381552c821d3ac3d82831126331068ad932752bc97",
+    "schema_version": 3,
+    "status": "READY",
+    "records": 18,
+    "record_counts": {
+      "PUBLIC_HOLIDAY": 13,
+      "REGIONAL_HOLIDAY_UNCERTAIN": 1,
+      "SCHOOL_TERM": 4
+    },
+    "csv_url": "https://discover.data.vic.gov.au/dataset/a8bc540d-181b-4fb5-8110-5fe52a04f6a7/resource/caaa47de-8626-46a6-aa28-3d948c15c5d9/download/important-dates-august-2026.csv",
+    "csv_sha256": "31dc69d7458190d4bcdb2e0c4504b721857b3c382c51423f3d81d0c2c2fcda44",
+    "verified_at": "2026-09-17T12:38:19.047061+00:00",
+    "coverage_scope": "datavic_school_terms_and_public_holidays",
+    "regional_holidays_complete": false,
+    "source_files": [
+      "important_dates.csv",
+      "sources.json"
+    ]
+  },
+  "cli_smoke": {
+    "source": "Live DataVic CSV only; no regional JSON",
+    "database": "Disposable local PostGIS only",
+    "preview_counts": {
+      "current": 1,
+      "target": 18,
+      "added": 18,
+      "removed": 1
+    },
+    "loaded": "loaded",
+    "repeated": "unchanged",
+    "counts": {
+      "PUBLIC_HOLIDAY": 13,
+      "REGIONAL_HOLIDAY_UNCERTAIN": 1,
+      "SCHOOL_TERM": 4
+    },
+    "regional_limitations_stored": true,
+    "old_regional_fixture_removed": true
+  },
+  "code_sha256": {
+    "src/iteration2_v2_pipeline/calendar.py": "8126f4088af4b6d69cea8faf07da3f8817d801664232ac237950b16767712a61",
+    "src/iteration2_v2_pipeline/calendar_download.py": "689970e0da8e316cde2e0b9a199525de15b08bb0f276dc59324d3771cefdc279",
+    "src/iteration2_v2_pipeline/calendar_storage.py": "4678d69f6d18c360e85b279cc41a9b0a5c0faae92e7a1a3ccce29f61ad9de878",
+    "src/iteration2_v2_pipeline/__main__.py": "249b66406c2af986f1567f1d391417b3f597fb2ca3a8deadbbee8b13893a792b",
+    "src/iteration2_v2_pipeline/settings.py": "ab8eb30b601047b4a7fe8234b1f07f2687a394765a74926e9afffa0305fe6e32"
+  },
+  "historical_calendar_csv_used_as_expected_output": false,
+  "limitations": [
+    "Regional substitute and part-day public holidays published separately by Business Victoria are not collected."
+  ],
+  "production_database_changed": false,
+  "git_commit_or_push_performed": false
+}

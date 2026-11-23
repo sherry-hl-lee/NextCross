@@ -1,0 +1,47 @@
+{
+  "started_at": "2026-09-12T04:08:26.312597+00:00",
+  "database": "neondb",
+  "removed_table": "iteration1_v2.road_speed",
+  "preserved_table": "iteration1_v2.notification_event",
+  "replacement": "iteration2_v2.road_speed",
+  "cascade_used": false,
+  "database_bytes_before": 470622208,
+  "old_table_bytes": 207020032,
+  "replacement_comparison": {
+    "old_rows": 462627,
+    "missing_ids": 0,
+    "speed_mismatches": 0,
+    "legacy_status_mismatches": 0,
+    "geometry_mismatches": 0
+  },
+  "new_road_rows": 471571,
+  "notification_rows_before": 0,
+  "unused_old_trigger_function_removed": true,
+  "speed_lookup": {
+    "speedKmh": 40,
+    "status": "scheduled",
+    "sourceSpeedZoneId": "009054e4-c898-4f5f-8ecd-a8c125995f86"
+  },
+  "crash_lookup_totals": {
+    "crashCount": 21,
+    "fatalities": 1,
+    "seriousInjuries": 5
+  },
+  "notification_table_preserved": true,
+  "database_bytes_after": 263602176,
+  "remaining_old_tables": [
+    "notification_event"
+  ],
+  "new_table_rows": {
+    "road_speed": 471571,
+    "speed_rule": 14104,
+    "calendar_period": 27,
+    "crash_build": 1,
+    "hotspot": 1451,
+    "crash_event": 19101
+  },
+  "notification_rows_after": 0,
+  "backend_v2_read_permission": true,
+  "completed_at": "2026-09-12T04:08:47.503754+00:00",
+  "state": "complete"
+}

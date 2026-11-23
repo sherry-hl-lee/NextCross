@@ -1,0 +1,32 @@
+{
+  "mode": "Existing frozen source files copied locally; no download during this validation run.",
+  "files": {
+    "speed-zones.geojson": {
+      "bytes": 476575130,
+      "sha256": "f85c273f6cc394447a1896ce6de5eec039f002c050bbf47f14f66c66377327cd"
+    },
+    "speed-signs.geojson": {
+      "bytes": 169237224,
+      "sha256": "186302a9ba84309ae7adfa9579b9b13e9338d443efa4dedbb71b585447f5de7d"
+    },
+    "crashes.csv": {
+      "bytes": 70319874,
+      "sha256": "19b8d027b2194c33588f4296b2b0bbbf82757182f0abb68693192ce8dff56f11"
+    },
+    "crashes.source.json": {
+      "bytes": 746,
+      "sha256": "c4f2b3bacbb7daaece54c1da3a66ba94030ae615f42231d6c6340e3a35194c79"
+    },
+    "accident-location.csv": {
+      "bytes": 12528667,
+      "sha256": "7a824d59d1a9196f187fee8cff31c76ea2f5c3ead2597a07b2d4a552c415e19f"
+    },
+    "accident-location.source.json": {
+      "bytes": 4409,
+      "sha256": "c892510563e63a12d8713c330846654ee26b7decee647c41476137bd57b6fc29"
+    }
+  },
+  "speed_signs_as_of": "2026-09-12",
+  "requirements_lock_sha256": "c32922386ca377a0097cd5ed9cb6af48e21f85a6e659b2ac3c02168af4184c61",
+  "calendar_sha256": "caec7ce2605cfbf5d7fd34eb94e1b76d614c1cc04b6e81aac9ef6fb4d49fcd32"
+}

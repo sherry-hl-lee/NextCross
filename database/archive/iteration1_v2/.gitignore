@@ -1,0 +1,17 @@
+# Keep generated files and local secrets out of the Iteration 1 v2 worktree.
+
+# macOS filesystem metadata.
+.DS_Store
+
+# Python bytecode and test caches.
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# Project-local virtual environment.
+.venv/
+
+# Local credentials and overrides. Keep only the placeholder template tracked.
+.env
+.env.*
+!.env.example

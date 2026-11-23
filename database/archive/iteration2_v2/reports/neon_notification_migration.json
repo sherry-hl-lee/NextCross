@@ -1,0 +1,134 @@
+{
+  "started_at": "2026-09-12T04:42:51.826133+00:00",
+  "database": "neondb",
+  "new_table": "iteration2_v2.notification_event",
+  "migration": "postgresql/migrations/003_notification.sql",
+  "migration_sha256": "b23ae17095eadb0080a55decd2c507f3457439b47cb67168512e4a7aa9be5280",
+  "state": "complete",
+  "notification_rows_inserted": 0,
+  "notification_history_copied": false,
+  "backend_source_changed": false,
+  "notifications_sent": 0,
+  "dataset_reload_performed": false,
+  "old_notification_rows_before": 0,
+  "database_bytes_before": 263602176,
+  "new_table_existed_before": false,
+  "columns_match_legacy": true,
+  "columns": [
+    {
+      "name": "trip_id",
+      "data_type": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "name": "event_id",
+      "data_type": "text",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "name": "occurred_at",
+      "data_type": "timestamp with time zone",
+      "nullable": "NO",
+      "default": null
+    },
+    {
+      "name": "status",
+      "data_type": "text",
+      "nullable": "NO",
+      "default": "'pending'::text"
+    },
+    {
+      "name": "resend_email_id",
+      "data_type": "text",
+      "nullable": "YES",
+      "default": null
+    },
+    {
+      "name": "error_message",
+      "data_type": "text",
+      "nullable": "YES",
+      "default": null
+    },
+    {
+      "name": "created_at",
+      "data_type": "timestamp with time zone",
+      "nullable": "NO",
+      "default": "CURRENT_TIMESTAMP"
+    },
+    {
+      "name": "sent_at",
+      "data_type": "timestamp with time zone",
+      "nullable": "YES",
+      "default": null
+    }
+  ],
+  "constraints": [
+    {
+      "type": "c",
+      "definition": "CHECK ((status = ANY (ARRAY['pending'::text, 'sent'::text, 'failed'::text])))"
+    },
+    {
+      "type": "n",
+      "definition": "NOT NULL trip_id"
+    },
+    {
+      "type": "n",
+      "definition": "NOT NULL event_id"
+    },
+    {
+      "type": "n",
+      "definition": "NOT NULL occurred_at"
+    },
+    {
+      "type": "n",
+      "definition": "NOT NULL created_at"
+    },
+    {
+      "type": "n",
+      "definition": "NOT NULL status"
+    },
+    {
+      "type": "p",
+      "definition": "PRIMARY KEY (trip_id, event_id)"
+    }
+  ],
+  "backend_role": "iteration1_v2_backend",
+  "backend_notification_privileges": {
+    "SELECT": true,
+    "INSERT": true,
+    "UPDATE": true,
+    "DELETE": false,
+    "TRUNCATE": false
+  },
+  "backend_schema_usage": true,
+  "backend_dataset_select": true,
+  "verification_method": "Owner connection for catalog and row-count checks; has_schema_privilege and has_table_privilege for effective backend ACLs. No notification inserts or sends.",
+  "migration_committed": true,
+  "tables": [
+    "calendar_period",
+    "crash_build",
+    "crash_event",
+    "hotspot",
+    "notification_event",
+    "road_speed",
+    "speed_rule"
+  ],
+  "table_rows": {
+    "calendar_period": 27,
+    "crash_build": 1,
+    "crash_event": 19101,
+    "hotspot": 1451,
+    "notification_event": 0,
+    "road_speed": 471571,
+    "speed_rule": 14104
+  },
+  "new_notification_total_relation_bytes": 16384,
+  "old_notification_table_preserved": true,
+  "old_notification_rows_after": 0,
+  "database_bytes_after": 263618560,
+  "postgres_version": "18.6 (2078fcb)",
+  "postgis_version": "3.6.4",
+  "completed_at": "2026-09-12T04:43:18.290428+00:00"
+}

@@ -1,0 +1,287 @@
+{
+  "validated_at": "2026-09-12T10:59:19.239958+10:00",
+  "scope": "Full frozen source files; task-owned disposable PostgreSQL/PostGIS database only. No production load or message delivery.",
+  "test_suite": {
+    "tests": 77,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "postgis_integration_tests": 19
+  },
+  "database_version": [
+    "PostgreSQL 17.5 (Debian 17.5-1.pgdg110+1) on x86_64-pc-linux-gnu, compiled by gcc (Debian 10.2.1-6) 10.2.1 20210110, 64-bit",
+    "3.5.2"
+  ],
+  "tables": [
+    "calendar_period",
+    "crash_build",
+    "crash_event",
+    "hotspot",
+    "road_speed",
+    "speed_rule"
+  ],
+  "speed_load": {
+    "road_rows": 471571,
+    "rule_rows": 14104,
+    "calendar_periods": 27
+  },
+  "speed_status_counts": {
+    "dynamic": 209,
+    "scheduled": 7280,
+    "static": 462628,
+    "unresolved": 1454
+  },
+  "all_legacy_rows_match_iteration1_v2": true,
+  "legacy_parity_rows": 462627,
+  "legacy_rows_sha256": "7f00b35ce6cb69178abb591b77f54c97339f9d495374466e27ff5ba1f6ea705f",
+  "all_crash_db_rows_match_prepared_csv": true,
+  "crash_event_rows": 19101,
+  "crash_counts": {
+    "fatalities": 270,
+    "serious_injuries": 6901,
+    "hotspots": 1451,
+    "clustered_events": 6899,
+    "individual_events": 12201,
+    "unlocated_events": 1
+  },
+  "notification_fixture_unchanged": true,
+  "notification_fixture_rows": 1,
+  "crash_query_count_conservation": [
+    {
+      "latitude": -37.8136,
+      "longitude": 144.9631,
+      "radiusM": 1000,
+      "timePeriod": "morning",
+      "totals": {
+        "crashCount": 21,
+        "fatalities": 1,
+        "seriousInjuries": 5
+      },
+      "clusters": 12,
+      "individualPoints": 6
+    },
+    {
+      "latitude": -37.8136,
+      "longitude": 144.9631,
+      "radiusM": 1000,
+      "timePeriod": "daytime",
+      "totals": {
+        "crashCount": 46,
+        "fatalities": 0,
+        "seriousInjuries": 11
+      },
+      "clusters": 13,
+      "individualPoints": 17
+    },
+    {
+      "latitude": -37.8136,
+      "longitude": 144.9631,
+      "radiusM": 1000,
+      "timePeriod": "night",
+      "totals": {
+        "crashCount": 51,
+        "fatalities": 0,
+        "seriousInjuries": 11
+      },
+      "clusters": 17,
+      "individualPoints": 17
+    },
+    {
+      "latitude": -37.8136,
+      "longitude": 144.9631,
+      "radiusM": 1000,
+      "timePeriod": "late_night",
+      "totals": {
+        "crashCount": 32,
+        "fatalities": 0,
+        "seriousInjuries": 9
+      },
+      "clusters": 16,
+      "individualPoints": 10
+    },
+    {
+      "latitude": -38.1499,
+      "longitude": 144.3617,
+      "radiusM": 1000,
+      "timePeriod": "morning",
+      "totals": {
+        "crashCount": 15,
+        "fatalities": 0,
+        "seriousInjuries": 4
+      },
+      "clusters": 5,
+      "individualPoints": 9
+    },
+    {
+      "latitude": -38.1499,
+      "longitude": 144.3617,
+      "radiusM": 1000,
+      "timePeriod": "daytime",
+      "totals": {
+        "crashCount": 35,
+        "fatalities": 1,
+        "seriousInjuries": 17
+      },
+      "clusters": 7,
+      "individualPoints": 20
+    },
+    {
+      "latitude": -38.1499,
+      "longitude": 144.3617,
+      "radiusM": 1000,
+      "timePeriod": "night",
+      "totals": {
+        "crashCount": 17,
+        "fatalities": 0,
+        "seriousInjuries": 10
+      },
+      "clusters": 5,
+      "individualPoints": 6
+    },
+    {
+      "latitude": -38.1499,
+      "longitude": 144.3617,
+      "radiusM": 1000,
+      "timePeriod": "late_night",
+      "totals": {
+        "crashCount": 4,
+        "fatalities": 0,
+        "seriousInjuries": 2
+      },
+      "clusters": 2,
+      "individualPoints": 2
+    },
+    {
+      "latitude": -37.5622,
+      "longitude": 143.8503,
+      "radiusM": 1000,
+      "timePeriod": "morning",
+      "totals": {
+        "crashCount": 8,
+        "fatalities": 0,
+        "seriousInjuries": 5
+      },
+      "clusters": 2,
+      "individualPoints": 6
+    },
+    {
+      "latitude": -37.5622,
+      "longitude": 143.8503,
+      "radiusM": 1000,
+      "timePeriod": "daytime",
+      "totals": {
+        "crashCount": 27,
+        "fatalities": 0,
+        "seriousInjuries": 6
+      },
+      "clusters": 4,
+      "individualPoints": 23
+    },
+    {
+      "latitude": -37.5622,
+      "longitude": 143.8503,
+      "radiusM": 1000,
+      "timePeriod": "night",
+      "totals": {
+        "crashCount": 15,
+        "fatalities": 0,
+        "seriousInjuries": 2
+      },
+      "clusters": 3,
+      "individualPoints": 8
+    },
+    {
+      "latitude": -37.5622,
+      "longitude": 143.8503,
+      "radiusM": 1000,
+      "timePeriod": "late_night",
+      "totals": {
+        "crashCount": 3,
+        "fatalities": 0,
+        "seriousInjuries": 3
+      },
+      "clusters": 2,
+      "individualPoints": 1
+    }
+  ],
+  "statewide_speed_query_examples": [
+    {
+      "sourceStatus": "dynamic",
+      "latitude": -37.482715574504994,
+      "longitude": 143.77839082010337,
+      "heading": 270,
+      "result": {
+        "speedKmh": null,
+        "status": "dynamic_unknown",
+        "reason": "live_state_unavailable",
+        "sourceSpeedZoneId": "129efb0c-b133-4a3f-a0ef-f0e692042740"
+      }
+    },
+    {
+      "sourceStatus": "scheduled",
+      "latitude": -36.463237559830674,
+      "longitude": 142.5826135717465,
+      "heading": 45,
+      "result": {
+        "speedKmh": 40,
+        "status": "scheduled",
+        "sourceSpeedZoneId": "009054e4-c898-4f5f-8ecd-a8c125995f86"
+      }
+    },
+    {
+      "sourceStatus": "unresolved",
+      "latitude": -38.371703648101374,
+      "longitude": 142.473171845458,
+      "heading": 315,
+      "result": {
+        "speedKmh": null,
+        "status": "unknown",
+        "reason": "unresolved_rule",
+        "sourceSpeedZoneId": "0062460c-e091-4e83-8376-074a953205d0"
+      }
+    },
+    {
+      "sourceStatus": "static_shared_zone",
+      "latitude": -38.31820173862135,
+      "longitude": 142.48590563075354,
+      "heading": 135,
+      "result": {
+        "speedKmh": 20,
+        "status": "static",
+        "sourceSpeedZoneId": "e2e464b0-272d-4266-b3f8-780d71fa9592"
+      }
+    }
+  ],
+  "capacity_report": "crash_capacity.json",
+  "speed_source_counts": {
+    "source_rows": 471572,
+    "legacy_rows": 462627,
+    "static_rows": 462628,
+    "skipped_invalid_geometry": 1,
+    "skipped_rows": 1,
+    "source_sign_rows": 106828,
+    "current_sign_rows": 106790,
+    "noncurrent_sign_rows": 38,
+    "additional_rows": 8944,
+    "unresolved_rows": 1454,
+    "scheduled_rows": 7280,
+    "scheduled_with_base": 5108,
+    "rule_rows": 14104,
+    "scheduled_without_base": 2172,
+    "dynamic_rows": 209,
+    "road_rows": 471571,
+    "normal_roads_retained_for_matching": 26675,
+    "signs_in_matching_buffer": 15902
+  },
+  "crash_build_id": "8c2d4e8b2ed185ece2d84908aad37d141d71b5474a4b078f2bc96ea0f5323752",
+  "notification_fixture_matches_original_expected_values": true,
+  "future_installed_sign_rule_references": 0,
+  "cleanup": {
+    "task_owned_database_container_removed": true,
+    "docker_desktop_restored_to_stopped": true,
+    "production_database_modified": false
+  },
+  "python_version": "3.14.6",
+  "source_snapshot": "source_snapshot.json",
+  "full_crash_build_report": "crash_build.json"
+}

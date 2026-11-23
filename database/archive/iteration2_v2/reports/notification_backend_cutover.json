@@ -1,0 +1,49 @@
+{
+  "recorded_at": "2026-09-12T05:28:06.442642+00:00",
+  "state": "code_ready_deployment_pending",
+  "backend_source": "backend/US2.3-Permitted-Area-Breach-Backend/app/repository.py",
+  "backend_source_sha256": "d0cfb0c4eaa19d690ac5f09f597f820d20b847a32d85bbe03471ef326b9298df",
+  "notification_table": "iteration2_v2.notification_event",
+  "runtime_role": "iteration1_v2_backend",
+  "runtime_connection_url_change_required": false,
+  "backend_tests": {
+    "command": ".venv/bin/python -m pytest -q",
+    "passed": 3,
+    "failed": 0,
+    "elapsed_seconds": 0.31,
+    "warnings": [
+      "Existing dependency DeprecationWarning for anyio.abc.BlockingPortal."
+    ]
+  },
+  "postgres_adapter_smoke": {
+    "result": "passed",
+    "postgres_version": "17.5 (Debian 17.5-1.pgdg110+1)",
+    "database": "Disposable local iteration2_test_backend_cutover",
+    "role_privileges": "USAGE on iteration2_v2; SELECT,INSERT,UPDATE on notification_event; no schema CREATE or table DELETE.",
+    "legacy_schema_present": false,
+    "checks": [
+      "Runtime repository factory uses PostgreSQL with existing URL selection.",
+      "New claims persist as pending.",
+      "Duplicate pending, failed, and sent keys are suppressed, including a fresh repository instance.",
+      "Failed state stores at most 500 error characters.",
+      "Sent state stores provider ID and timestamp and clears the error.",
+      "The same event ID in a different trip is a separate event."
+    ],
+    "notifications_sent": 0
+  },
+  "neon_history_preflight": {
+    "checked_at": "2026-09-12T05:25:41.828569+00:00",
+    "old_rows": 0,
+    "new_rows": 0,
+    "old_keys_missing_in_new": 0,
+    "production_data_modified": false,
+    "scope": "Read-only snapshot; recheck after stopping old writers at deployment."
+  },
+  "production_service_redeployed": false,
+  "old_table_removed": false,
+  "remaining_activation": "Stop old API instances/writers, verify or transfer history if rows exist, then deploy/restart the updated backend with the same runtime URL.",
+  "test_environment_cleanup": {
+    "temporary_test_container_and_volumes_removed": true,
+    "docker_desktop_restored_to_initial_stopped_state": true
+  }
+}

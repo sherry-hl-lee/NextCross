@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "crashes": {
+    "baseline_start": "2021-01-01",
+    "baseline_end": "2025-12-31",
+    "first_release_year": 2027,
+    "release_month": 9,
+    "window_years": 5,
+    "minimum_retained_fraction": 0.7,
+    "maximum_missing_coordinate_fraction": 0.15
+  },
+  "speed": {
+    "minimum_retained_fraction": 0.8,
+    "maximum_unresolved_fraction_increase": 0.05
+  },
+  "monitoring": {
+    "calendar_warning_days": 90,
+    "database_warning_bytes": 800000000
+  }
+}

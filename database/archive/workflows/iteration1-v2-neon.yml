@@ -1,0 +1,147 @@
+name: Iteration 1 v2 - Neon data deployment
+
+run-name: "iteration1_v2 ${{ inputs.mode }} by @${{ github.actor }}"
+
+on:
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: Validate the current source, or replace the Neon road data
+        required: true
+        type: choice
+        default: validate-only
+        options:
+          - validate-only
+          - deploy
+      expected_accepted:
+        description: Positive accepted-road count reported by validate-only
+        required: false
+        type: string
+        default: "0"
+      confirmation:
+        description: Enter DEPLOY to confirm a production replacement
+        required: false
+        type: string
+        default: ""
+
+permissions:
+  contents: read
+
+concurrency:
+  group: iteration1-v2-neon-production
+  cancel-in-progress: false
+
+defaults:
+  run:
+    shell: bash
+    working-directory: data-pipeline/iteration1_v2
+
+jobs:
+  validate-only:
+    if: ${{ inputs.mode == 'validate-only' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+
+      - name: Set up Python
+        uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: data-pipeline/iteration1_v2/requirements.txt
+
+      - name: Install dependencies
+        run: python -m pip install -r requirements.txt
+
+      - name: Run unit tests
+        env:
+          PYTHONPATH: src
+        run: python -m unittest discover -s tests -v
+
+      - name: Download current Speed Zones
+        env:
+          PYTHONPATH: src
+        run: python -m iteration1_v2_pipeline download
+
+      - name: Validate and report current counts
+        env:
+          PYTHONPATH: src
+        run: python -m iteration1_v2_pipeline validate
+
+  deploy:
+    if: ${{ inputs.mode == 'deploy' && github.ref == 'refs/heads/main' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    environment: neon-production
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+
+      - name: Guard production deployment
+        env:
+          CONFIRMATION: ${{ inputs.confirmation }}
+          EXPECTED_ACCEPTED: ${{ inputs.expected_accepted }}
+        run: |
+          set -euo pipefail
+          test "$GITHUB_REF" = "refs/heads/main"
+          test "$CONFIRMATION" = "DEPLOY"
+          [[ "$EXPECTED_ACCEPTED" =~ ^[1-9][0-9]*$ ]]
+
+      - name: Set up Python
+        uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: data-pipeline/iteration1_v2/requirements.txt
+
+      - name: Install dependencies
+        run: python -m pip install -r requirements.txt
+
+      - name: Run unit tests
+        env:
+          PYTHONPATH: src
+        run: python -m unittest discover -s tests -v
+
+      - name: Download current Speed Zones
+        env:
+          PYTHONPATH: src
+        run: python -m iteration1_v2_pipeline download
+
+      - name: Apply database schema
+        env:
+          PYTHONPATH: src
+          DATABASE_URL: ${{ secrets.NEON_DIRECT_DATABASE_URL }}
+        run: |
+          test -n "${DATABASE_URL:-}"
+          python -m iteration1_v2_pipeline migrate
+
+      - name: Replace road-speed data
+        env:
+          PYTHONPATH: src
+          DATABASE_URL: ${{ secrets.NEON_DIRECT_DATABASE_URL }}
+          EXPECTED_ACCEPTED: ${{ inputs.expected_accepted }}
+        run: >-
+          python -m iteration1_v2_pipeline load
+          --expect-accepted "$EXPECTED_ACCEPTED"
+
+      - name: Smoke-test nearest-speed lookup
+        env:
+          PYTHONPATH: src
+          DATABASE_URL: ${{ secrets.NEON_DIRECT_DATABASE_URL }}
+        run: |
+          set -euo pipefail
+          LOOKUP_RESULT="$(python -m iteration1_v2_pipeline lookup \
+            --latitude -37.8136 \
+            --longitude 144.9631 \
+            --radius-m 30)"
+          printf '%s\n' "$LOOKUP_RESULT"
+          export LOOKUP_RESULT
+          python -c 'import json, os; value = json.loads(os.environ["LOOKUP_RESULT"])["speedKmh"]; assert isinstance(value, int) and value > 0'

@@ -1,0 +1,462 @@
+# Data preparation and production publication are separate operations. Schedules
+# create candidates or read status; only an explicit publish dispatch may write DB.
+# See deploy/operations.py for domain quality/annual policy and workflow_support.py
+# for source trust, release archives and the publication intent journal.
+name: Iteration 3 v1 - Neon data deployment
+run-name: "iteration3_v1 ${{ inputs.operation || github.event_name }} ${{ inputs.dataset || '' }} ${{ inputs.year || inputs.release_year || '' }} by @${{ github.actor }}"
+
+on:
+  # PR code receives a disposable database only. It cannot enter the candidate
+  # or publication jobs below, which require a main-branch manual dispatch.
+  pull_request:
+    paths:
+      - data-pipeline/iteration3_v1/**
+      - .github/workflows/iteration3-v1-neon.yml
+  # UTC schedules: monthly candidate dispatch on day 5; weekly read-only status.
+  # The local Melbourne time shifts with daylight saving. Missed runs are reviewed
+  # by the maintenance owner rather than treated as an automatic publication trigger.
+  schedule:
+    - cron: "23 1 5 * *"
+    - cron: "17 2 * * 2"
+  workflow_dispatch:
+    # Preparation inputs describe new work; publication inputs identify previously
+    # reviewed bytes. Changing dataset/year here never rebuilds a selected artifact.
+    inputs:
+      operation:
+        description: Prepare a candidate, publish an exact reviewed candidate, or check status
+        required: true
+        type: choice
+        default: prepare
+        options: [prepare, publish, status]
+      dataset:
+        description: Dataset to prepare; publication uses the candidate's manifest
+        required: true
+        type: choice
+        default: speed
+        options: [speed, calendar, crashes]
+      year:
+        description: Calendar year; blank uses the current Melbourne year
+        type: string
+        default: ""
+      release_year:
+        description: Crash release year; required for crashes (2027 means 2022-2026)
+        type: string
+        default: ""
+      as_of:
+        description: Optional speed-sign validity date YYYY-MM-DD
+        type: string
+        default: ""
+      calendar_review_path:
+        description: Optional reviewed calendar directory committed to main; repository-relative
+        type: string
+        default: ""
+      source:
+        description: Publish an Actions artifact, or restore a retained archive
+        type: choice
+        default: artifact
+        options: [artifact, archive]
+      candidate_run_id:
+        description: Successful main preparation run ID (artifact source only)
+        type: string
+        default: ""
+      candidate_artifact_id:
+        description: Candidate artifact ID from that run's summary (artifact source only)
+        type: string
+        default: ""
+      candidate_id:
+        description: Exact 64-character candidate ID reviewed for publication or restoration
+        type: string
+        default: ""
+      reason:
+        description: Required publication or restoration review note
+        type: string
+        default: ""
+      allow_bounded_calendar:
+        description: Explicitly accept the calendar candidate's limited coverage period
+        type: boolean
+        default: false
+      restore:
+        description: Required for source=archive; intentionally restore a retained candidate
+        type: boolean
+        default: false
+
+# Start with checkout-only permission. Individual jobs add only the GitHub access
+# required to dispatch, inspect or archive; DB secrets remain step-scoped below.
+permissions:
+  contents: read
+
+defaults:
+  run:
+    shell: bash
+    working-directory: data-pipeline/iteration3_v1
+
+env:
+  PYTHONPATH: src:tests:.
+  PYTHONUNBUFFERED: "1"
+
+jobs:
+  # Run transforms, candidate safety and storage tests before manual preparation
+  # or publication. The PostGIS service is disposable and isolated from Neon.
+  tests:
+    if: ${{ github.event_name != 'schedule' && inputs.operation != 'status' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    services:
+      postgis:
+        image: postgis/postgis:17-3.5
+        env:
+          POSTGRES_DB: iteration2_test_ci
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: disposable_ci_password
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd "pg_isready -U postgres -d iteration2_test_ci"
+          --health-interval 10s --health-timeout 5s --health-retries 10
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.14"
+          cache: pip
+          cache-dependency-path: data-pipeline/iteration3_v1/requirements.lock
+      - run: python -m pip install -r requirements.lock
+      - name: Test candidate safety and disposable database storage
+        env:
+          ITERATION2_TEST_DATABASE_URL: postgresql://postgres:disposable_ci_password@localhost:5432/iteration2_test_ci
+        run: >-
+          python -m unittest
+          test_build test_crash test_calendar test_calendar_download
+          test_calendar_cli test_calendar_postgis test_notification_postgis
+          test_deployment test_operations test_calendar_review test_backup test_workflow_support -v
+
+  # Dispatch each dataset/year as its own run. A future-calendar failure must not
+  # mark a valid speed candidate's source run as failed. The September crash
+  # request is added by the helper only when the annual policy has started.
+  monthly_candidates:
+    if: ${{ github.event_name == 'schedule' && github.event.schedule == '23 1 5 * *' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      actions: write
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.14"
+      - name: Dispatch independent main preparation runs without DB credentials
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python deploy/workflow_support.py dispatch > scheduled-candidates.json
+      - name: Show dispatched candidates
+        if: ${{ always() }}
+        run: |
+          if [[ -f scheduled-candidates.json ]]; then
+            cat scheduled-candidates.json >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+  # Main is the sole source of publishable artifacts. This job has neither a
+  # production environment nor a DB secret, even for manually reviewed calendars.
+  prepare:
+    if: ${{ github.event_name == 'workflow_dispatch' && inputs.operation == 'prepare' && github.ref == 'refs/heads/main' }}
+    needs: tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.14"
+          cache: pip
+          cache-dependency-path: data-pipeline/iteration3_v1/requirements.lock
+      - run: python -m pip install -r requirements.lock
+      - name: Prepare one dataset and retain a sanitized outcome
+        env:
+          DATASET: ${{ inputs.dataset }}
+          CALENDAR_YEAR: ${{ inputs.year }}
+          RELEASE_YEAR: ${{ inputs.release_year }}
+          SPEED_AS_OF: ${{ inputs.as_of }}
+          REVIEW_PATH: ${{ inputs.calendar_review_path }}
+        run: python deploy/workflow_support.py prepare
+      # The immutable artifact ID and manifest candidate ID are both needed for
+      # later publication. Short Actions retention is not the recovery archive.
+      - name: Save the exact candidate including source evidence
+        id: candidate
+        uses: actions/upload-artifact@v7
+        with:
+          name: iteration3-v1-candidate-${{ github.run_id }}-${{ github.run_attempt }}
+          path: data-pipeline/iteration3_v1/data/processed/candidate/
+          if-no-files-found: error
+          retention-days: 90
+          compression-level: 0
+      - name: Show candidate identity and review material
+        if: ${{ always() }}
+        env:
+          ARTIFACT_ID: ${{ steps.candidate.outputs.artifact-id }}
+        run: |
+          python - <<'PY'
+          import os
+          from pathlib import Path
+          with open(os.environ["GITHUB_STEP_SUMMARY"], "a") as summary:
+              summary.write(f"Preparation run: {os.environ['GITHUB_RUN_ID']}\n\nArtifact ID: {os.environ.get('ARTIFACT_ID') or 'none'}\n\n")
+              for path in (Path("data/processed/candidate/candidate_manifest.json"), Path("data/processed/preparation-result.json")):
+                  if path.exists():
+                      summary.write(f"{path.name}\n\n```json\n{path.read_text()}\n```\n\n")
+              summary.write("Preparation never publishes to Neon. Review source evidence, coverage, quality and counts before a separate publish run.\n")
+          PY
+      - name: Retain preparation outcome even after failure
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v7
+        with:
+          name: iteration3-v1-preparation-result-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            data-pipeline/iteration3_v1/data/processed/preparation-result.json
+            data-pipeline/iteration3_v1/data/processed/*failure*.json
+          if-no-files-found: warn
+          retention-days: 90
+
+  # This entire job, including history/intent/evidence handling, is serialized.
+  # Keeping the historical group name coordinates older compatible workflow names
+  # that still write the same schema. operations.py also uses a DB advisory lock.
+  publish:
+    if: ${{ github.event_name == 'workflow_dispatch' && inputs.operation == 'publish' && github.ref == 'refs/heads/main' }}
+    needs: tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    # Required reviewers, if desired, are configured in GitHub environment settings;
+    # this name alone does not create an approval requirement.
+    environment: neon-production
+    concurrency:
+      group: iteration2-v2-neon-production
+      cancel-in-progress: false
+    # Release archives/journals require contents:write; the selected artifact
+    # requires actions:read. These permissions do not themselves grant DB access.
+    permissions:
+      contents: write
+      actions: read
+    steps:
+      # Use the main commit selected when this run started. An older candidate
+      # retains its producer SHA as evidence but cannot choose executable code.
+      - name: Check out trusted main code; never execute code from a candidate
+        uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.14"
+          cache: pip
+          cache-dependency-path: data-pipeline/iteration3_v1/requirements.lock
+      - run: python -m pip install -r requirements.lock
+      - name: Require a review and explicit restore choice
+        env:
+          CANDIDATE_ID: ${{ inputs.candidate_id }}
+          REASON: ${{ inputs.reason }}
+          SOURCE: ${{ inputs.source }}
+          RESTORE: ${{ inputs.restore }}
+        run: |
+          python - <<'PY'
+          import os
+          from deploy.workflow_support import checked_id
+          checked_id(os.environ["CANDIDATE_ID"])
+          if not os.environ["REASON"].strip():
+              raise SystemExit("A review reason is required")
+          if (os.environ["SOURCE"] == "archive") != (os.environ["RESTORE"] == "true"):
+              raise SystemExit("Archive publication requires restore=true; normal artifacts require restore=false")
+          PY
+      # Verify the source run before downloading: repository, workflow, main ref,
+      # success, attempt, artifact identity and source commit must all agree.
+      - name: Verify successful main preparation and artifact provenance
+        id: source
+        if: ${{ inputs.source == 'artifact' }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SOURCE_RUN: ${{ inputs.candidate_run_id }}
+          ARTIFACT_ID: ${{ inputs.candidate_artifact_id }}
+        run: >-
+          python deploy/workflow_support.py verify-source
+          --run-id "$SOURCE_RUN" --artifact-id "$ARTIFACT_ID"
+          --output data/processed/source-provenance.json
+      - name: Download only the verified immutable artifact
+        if: ${{ inputs.source == 'artifact' }}
+        uses: actions/download-artifact@v8
+        with:
+          github-token: ${{ github.token }}
+          run-id: ${{ inputs.candidate_run_id }}
+          artifact-ids: ${{ inputs.candidate_artifact_id }}
+          path: data-pipeline/iteration3_v1/data/processed/candidate
+      - name: Recover retained archive with checksum and safe extraction checks
+        id: restored
+        if: ${{ inputs.source == 'archive' }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+          CANDIDATE_ID: ${{ inputs.candidate_id }}
+        run: >-
+          python deploy/workflow_support.py fetch-archive
+          --candidate-id "$CANDIDATE_ID" --output data/processed/candidate
+          --provenance data/processed/source-provenance.json
+      # Both transport paths converge on the same content validator. Source
+      # metadata alone cannot authorize changed payload bytes or a different ID.
+      - name: Validate candidate ID, source commit and files without DB credentials
+        env:
+          CANDIDATE_ID: ${{ inputs.candidate_id }}
+          SOURCE_COMMIT: ${{ steps.source.outputs.commit || steps.restored.outputs.commit }}
+        run: >-
+          python deploy/operations.py validate --input data/processed/candidate
+          --candidate-id "$CANDIDATE_ID" --commit "$SOURCE_COMMIT"
+      - name: Retain candidate beyond Actions artifact expiry before publication
+        id: archive
+        if: ${{ inputs.source == 'artifact' }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+          CANDIDATE_ID: ${{ inputs.candidate_id }}
+        run: >-
+          python deploy/workflow_support.py archive --input data/processed/candidate
+          --candidate-id "$CANDIDATE_ID" --provenance data/processed/source-provenance.json
+      # History includes every publication release page and rejects pending
+      # intents. Check it before creating this run's own intent, while the job
+      # holds the shared publication concurrency group.
+      - name: Read durable annual publication history before DB access
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python deploy/workflow_support.py history --output data/processed/publication-history.json
+      # A verified draft intent survives runner cancellation or a lost commit
+      # acknowledgement. Future operations stay blocked until it is resolved.
+      - name: Retain a publication intent before providing DB credentials
+        id: intent
+        env:
+          GH_TOKEN: ${{ github.token }}
+          CANDIDATE_ID: ${{ inputs.candidate_id }}
+          REVIEW_REASON: ${{ inputs.reason }}
+          REVIEWED_BY: ${{ github.actor }}
+          RESTORE: ${{ inputs.restore }}
+        run: |
+          args=(begin-publication --input data/processed/candidate --candidate-id "$CANDIDATE_ID"
+                --reviewed-by "$REVIEWED_BY" --reason "$REVIEW_REASON")
+          if [[ "$RESTORE" == "true" ]]; then
+            args+=(--restore)
+          fi
+          python deploy/workflow_support.py "${args[@]}"
+      # This is the only writer-credential step. It loads the chosen candidate
+      # without downloading sources or applying schema migrations. Other domains
+      # and backend-owned email histories remain outside this dataset update.
+      - name: Publish reviewed dataset to the existing nine-table schema
+        id: publication
+        env:
+          DATABASE_URL: ${{ secrets.NEON_DIRECT_DATABASE_URL }}
+          PGCONNECT_TIMEOUT: "15"
+          CANDIDATE_ID: ${{ inputs.candidate_id }}
+          REVIEW_REASON: ${{ inputs.reason }}
+          REVIEWED_BY: ${{ github.actor }}
+          ALLOW_BOUNDED: ${{ inputs.allow_bounded_calendar }}
+          RESTORE: ${{ inputs.restore }}
+        run: |
+          args=(publish --input data/processed/candidate --candidate-id "$CANDIDATE_ID"
+                --reviewed-by "$REVIEWED_BY" --reason "$REVIEW_REASON"
+                --report data/processed/publication-result.json
+                --publication-history data/processed/publication-history.json)
+          if [[ "$ALLOW_BOUNDED" == "true" ]]; then
+            args+=(--allow-bounded-calendar)
+          fi
+          if [[ "$RESTORE" == "true" ]]; then
+            args+=(--restore)
+          fi
+          python deploy/operations.py "${args[@]}"
+      - name: Record a pre-publication failure when no DB result exists
+        if: ${{ always() }}
+        env:
+          JOB_STATUS: ${{ job.status }}
+        run: |
+          python - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+          report = Path("data/processed/publication-result.json")
+          if not report.exists():
+              report.parent.mkdir(parents=True, exist_ok=True)
+              report.write_text(json.dumps({"status": os.environ["JOB_STATUS"], "stage": "before-publication",
+                                           "note": "No publication result; inspect verification and archive steps."}) + "\n")
+          with open(os.environ["GITHUB_STEP_SUMMARY"], "a") as summary:
+              summary.write("```json\n" + report.read_text() + "\n```\n")
+          PY
+      # Attempt evidence retention even when the writer failed. Preflight failures
+      # can resolve safely; a write-phase failure remains pending for DB-verified
+      # human reconciliation. Never classify an uncertain commit as a rollback.
+      - name: Retain publication evidence separately from the finalized candidate archive
+        if: ${{ always() && steps.intent.outcome == 'success' && steps.publication.outcome != 'skipped' }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+          CANDIDATE_ID: ${{ inputs.candidate_id }}
+        run: >-
+          python deploy/workflow_support.py record-publication --candidate-id "$CANDIDATE_ID"
+          --report data/processed/publication-result.json
+      - name: Retain publication outcome
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v7
+        with:
+          name: iteration3-v1-publication-result-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            data-pipeline/iteration3_v1/data/processed/publication-result.json
+            data-pipeline/iteration3_v1/data/processed/source-provenance.json
+          if-no-files-found: warn
+          retention-days: 90
+
+  # Health checks deliberately use a separate repository read-only secret and no
+  # production environment. Missing credentials report not_configured/attention,
+  # not success. The owner still checks that scheduled workflows actually ran.
+  status:
+    if: ${{ (github.event_name == 'schedule' && github.event.schedule == '17 2 * * 2') || (github.event_name == 'workflow_dispatch' && inputs.operation == 'status' && github.ref == 'refs/heads/main') }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: read
+      actions: read
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.14"
+          cache: pip
+          cache-dependency-path: data-pipeline/iteration3_v1/requirements.lock
+      - run: python -m pip install -r requirements.lock
+      - name: Read coverage and capacity with an optional repository read-only secret
+        env:
+          DATABASE_URL: ${{ secrets.NEON_READ_ONLY_DATABASE_URL }}
+          PGCONNECT_TIMEOUT: "15"
+        run: python deploy/operations.py status --report data/processed/status-result.json
+      - name: Show status and recent runs for the maintenance owner
+        if: ${{ always() }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p data/processed
+          gh run list --workflow iteration3-v1-neon.yml --limit 30 \
+            --json databaseId,displayTitle,event,status,conclusion,createdAt,url \
+            > data/processed/recent-runs.json
+          python - <<'PY'
+          import os
+          from pathlib import Path
+          with open(os.environ["GITHUB_STEP_SUMMARY"], "a") as summary:
+              for name in ("status-result.json", "recent-runs.json"):
+                  path = Path("data/processed") / name
+                  if path.exists():
+                      summary.write(name + "\n\n```json\n" + path.read_text() + "\n```\n\n")
+              summary.write("Check missed/failed monthly preparation runs. A missing read-only secret means DB monitoring is not configured, not that the DB is healthy.\n")
+          PY
+      - name: Retain read-only status outcome
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v7
+        with:
+          name: iteration3-v1-status-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            data-pipeline/iteration3_v1/data/processed/status-result.json
+            data-pipeline/iteration3_v1/data/processed/recent-runs.json
+          if-no-files-found: warn
+          retention-days: 90
